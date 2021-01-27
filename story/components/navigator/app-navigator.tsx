@@ -3,7 +3,7 @@ import {
   inject,
   onBeforeUnmount,
   provide,
-  reactive,
+  reactive
 } from "vue";
 
 interface Route {
@@ -22,7 +22,7 @@ function getRoute(): Route {
   const [path, hash] = decodeURIComponent(locationHash).split("#");
   return {
     path,
-    hash,
+    hash
   };
 }
 
@@ -30,21 +30,21 @@ function useAppNavigator(props: { defaultPath?: string }) {
   const currentRoute = getRoute();
   !currentRoute.path && (currentRoute.path = props.defaultPath);
   const state = reactive({
-    route: currentRoute,
+    route: currentRoute
   });
   const methods = {
     go(path: string) {
       window.location.hash = encodeURIComponent(path);
-    },
+    }
   };
   const handler = {
     hashChange: () => {
       state.route = getRoute();
-    },
+    }
   };
   const refer = {
     state,
-    methods,
+    methods
   };
   window.addEventListener("hashchange", handler.hashChange);
   onBeforeUnmount(() =>
@@ -60,11 +60,11 @@ export function injectAppNavigator() {
 export const AppNavigator = defineComponent({
   name: "app-navigator",
   props: {
-    defaultPath: String,
+    defaultPath: String
   },
   setup(props, setupContext) {
     useAppNavigator(props);
     return () =>
       !!setupContext.slots.default ? setupContext.slots.default() : null;
-  },
+  }
 });

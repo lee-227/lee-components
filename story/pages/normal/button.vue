@@ -1,14 +1,8 @@
 <template>
-  <div class="">
-  </div>
+  <div class="">button</div>
 </template>
 
 <script>
-  import {
-    defineComponent
-  } from 'vue'
-  export default defineComponent({})
+import { defineComponent } from "vue";
+export default defineComponent({});
 </script>
-<style scoped>
-
-</style>

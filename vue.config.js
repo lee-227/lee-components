@@ -1,5 +1,5 @@
 const path = require("path");
-const resolve = (filePath) => path.join(__dirname, "./", filePath);
+const resolve = filePath => path.join(__dirname, "./", filePath);
 
 module.exports = {
   outputDir: "docs",
@@ -10,11 +10,11 @@ module.exports = {
       entry: resolve("story/main.ts"),
       template: "public/index.html",
       filename: "index.html",
-      title: "v3-components",
-    },
+      title: "v3-components"
+    }
   },
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     config.plugins.delete("prefetch-index").delete("preload-index");
     config.resolve.alias.set("story", resolve("story"));
-  },
+  }
 };
