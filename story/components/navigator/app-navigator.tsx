@@ -1,3 +1,4 @@
+import { designComponent } from "@/use/designComponent";
 import {
   defineComponent,
   inject,
@@ -11,8 +12,6 @@ interface Route {
   hash?: string;
   param?: { [k: string]: string };
 }
-
-const APP_NAVIGATOR_PROVIDER = "@@app-navigator";
 
 function getRoute(): Route {
   let locationHash = window.location.hash || "";
@@ -50,21 +49,21 @@ function useAppNavigator(props: { defaultPath?: string }) {
   onBeforeUnmount(() =>
     window.removeEventListener("hashchange", handler.hashChange)
   );
-  provide(APP_NAVIGATOR_PROVIDER, refer);
   return refer;
 }
-export function injectAppNavigator() {
-  return inject(APP_NAVIGATOR_PROVIDER) as ReturnType<typeof useAppNavigator>;
-}
 
-export const AppNavigator = defineComponent({
+export const AppNavigator = designComponent({
   name: "app-navigator",
+  provideRefer: true,
   props: {
     defaultPath: String
   },
   setup(props, setupContext) {
-    useAppNavigator(props);
-    return () =>
-      !!setupContext.slots.default ? setupContext.slots.default() : null;
+    let refer = useAppNavigator(props);
+    return {
+      refer,
+      render: () =>
+        !!setupContext.slots.default ? setupContext.slots.default() : null
+    };
   }
 });

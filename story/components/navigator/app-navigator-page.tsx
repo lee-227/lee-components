@@ -5,14 +5,14 @@ import {
   reactive,
   watch
 } from "vue";
-import { injectAppNavigator } from "./app-navigator";
+import { AppNavigator } from "./app-navigator";
 
 export const AppNavigatorPage = defineComponent({
   setup() {
     const state = reactive({
       PageComponent: null as null | DefineComponent
     });
-    const navigator = injectAppNavigator();
+    const navigator = AppNavigator.use.inject();
     const utils = {
       reset: async () => {
         let { path } = navigator.state.route;

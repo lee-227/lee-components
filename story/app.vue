@@ -35,8 +35,8 @@ import { AppNavigatorPage } from "./components/navigator/app-navigator-page";
 import AppMenu from "./components/app/app-menu";
 
 const HomeConfig = {
-  headSize: 60,
-  menuSize: 300
+  headSize: 40,
+  menuSize: 150
 };
 
 export default {
