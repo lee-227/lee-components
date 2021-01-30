@@ -1,11 +1,5 @@
 import { designComponent } from "@/use/designComponent";
-import {
-  defineComponent,
-  inject,
-  onBeforeUnmount,
-  provide,
-  reactive
-} from "vue";
+import { onBeforeUnmount, reactive } from "vue";
 
 interface Route {
   path?: string;

@@ -28,7 +28,7 @@ export const MENUS: MenuGroup[] = [
   {
     name: "表单",
     children: [
-      { name: "Input", title: "输入框", page: "/normal/input", complete: false }
+      { name: "Input", title: "输入框", page: "/form/input", complete: false }
     ]
   }
 ];
