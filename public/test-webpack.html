@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="../dest/index.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@next"></script>
+    <script src="../dest/index.js"></script>
+
+    <script>
+      console.log(LeeComponents);
+
+      const app = window.Vue.createApp({
+        template: `
+            <div>
+                <lee-button label="label"></lee-button>
+                <lee-button>插槽内容</lee-button>
+
+                <lee-input/>
+                <lee-input status="error" ref="myInput"/>
+                <button @click="outerFocus">outerFocus</button>
+            </div>
+        `,
+        setup() {
+          const inputRef = LeeComponents.Input.use.ref("myInput");
+
+          return {
+            outerFocus() {
+              inputRef.value.methods.focus(false);
+            }
+          };
+        }
+      });
+
+      app.use(LeeComponents);
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>
