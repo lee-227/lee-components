@@ -41,16 +41,27 @@ export function designComponent<
           }
           provide(`@@${leftOptions.name}`, refer);
         }
-        ctx._refer = refer;
+        if (!!refer) {
+          const duplicateKey = Object.keys(leftOptions || {}).find(i =>
+            Object.prototype.hasOwnProperty.call(refer as any, i)
+          );
+          if (!!duplicateKey) {
+            console.error(
+              `designComponent: duplicate key ${duplicateKey} in refer`
+            );
+          } else {
+            Object.assign(ctx.proxy, refer);
+          }
+        }
         return render;
       }
     } as any),
     use: {
       ref: (refName: string) => {
-        const ctx = (getCurrentInstance() as any).ctx;
+        const ctx = getCurrentInstance() as any;
         return {
           get value() {
-            return ctx.$refs[refName].$._refer as Refer | null;
+            return ctx.refs[refName] as Refer | null;
           }
         };
       },

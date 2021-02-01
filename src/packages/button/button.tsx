@@ -1,6 +1,9 @@
 import { designComponent } from "@/use/designComponent";
 import { computed } from "vue";
 import "./button.scss";
+
+console.log("加载了 Input 组件");
+
 export default designComponent({
   name: "lee-button",
   props: {
