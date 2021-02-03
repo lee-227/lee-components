@@ -9,7 +9,7 @@
       style="margin-right: 8px"
     />
     <h4>类型提示</h4>
-    <lee-input ref="myInput" />
+    <lee-input ref="myInput" :modelValue="value" @change="change" />
     <button @click="outerClear">outer clear</button>
     <button @click="outerFocus">outer focus</button>
   </div>
@@ -17,12 +17,17 @@
 
 <script lang="ts">
 import { Input } from "@/index";
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
 export default defineComponent({
   name: "demo-input",
   setup() {
     const inputRef = Input.use.ref("myInput");
+    const value = ref("123");
     return {
+      value,
+      change(val: any) {
+        console.log(val);
+      },
       outerClear: () => {
         inputRef.value?.methods.clear();
       },

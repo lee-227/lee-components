@@ -52,7 +52,7 @@ export const AppNavigator = designComponent({
   props: {
     defaultPath: String
   },
-  setup(props, setupContext) {
+  setup({ props, setupContext }) {
     let refer = useAppNavigator(props);
     return {
       refer,

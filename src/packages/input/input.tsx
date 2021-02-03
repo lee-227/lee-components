@@ -1,5 +1,5 @@
 import { designComponent } from "../../use/designComponent";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import "./input.scss";
 
 console.log("加载了 Input 组件");
@@ -7,10 +7,14 @@ console.log("加载了 Input 组件");
 export default designComponent({
   name: "lee-input",
   props: {
-    status: { type: String, default: "primary" }
+    status: { type: String, default: "primary" },
+    modelValue: { type: [String, Number] }
   },
-  setup(props) {
-    const modelValue = ref("");
+  emits: {
+    updateModelValue: (val: string | number | undefined) => true
+  },
+  setup({ props, event }) {
+    const model = ref(props.modelValue);
     const inputRef = ref(null as null | HTMLInputElement);
     const classes = computed(() => [
       "pl-input",
@@ -20,24 +24,35 @@ export default designComponent({
       focus(flag: boolean) {
         inputRef.value?.focus();
         if (!flag) {
-          modelValue.value = "";
+          model.value = "";
         }
       },
       clear() {
-        modelValue.value = "";
+        model.value = "";
+      }
+    };
+    watch(
+      () => props.modelValue,
+      (val: string | number | undefined) => (model.value = val)
+    );
+    const handler = {
+      onInput: (e: Event) => {
+        model.value = (e.target as HTMLInputElement).value;
+        event.emit.updateModelValue(model.value);
       }
     };
     return {
       refer: {
         methods,
-        modelValue
+        model
       },
       render: () => (
         <div class={classes.value}>
           <input
             class="pl-input-inner"
             type="text"
-            v-model={modelValue.value}
+            v-model={model.value}
+            onInput={handler.onInput}
             ref={inputRef}
           ></input>
           <button onClick={methods.clear}>clear</button>
